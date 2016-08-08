@@ -10,6 +10,7 @@ import model.Af;
 public class Converte {
 
 	public static void main(String[] args) {
+		Af afndLamb = null;
 		BufferedReader leitor = null;
 		try {
 			leitor = Arquivo.LerArquivo(args[0]);
@@ -18,7 +19,7 @@ public class Converte {
 			e.getMessage());
 		}
 		try {
-			Af afndLamb = Arquivo.getAf(leitor);
+			afndLamb = Arquivo.getAf(leitor);
 		} catch (IOException e) {
 			System.err.printf("Erro na leitura do arquivo: %s.\n",
 			e.getMessage());

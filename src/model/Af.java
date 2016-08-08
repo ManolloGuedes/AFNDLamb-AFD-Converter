@@ -1,21 +1,32 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Af {
-	private ArrayList<Estado> estados;
+	private Map<String, Estado> estados;
 	private ArrayList <String> linguagem;
+	
+	public Af() {
+		super();
+		estados = new HashMap<String, Estado>(); 
+		linguagem = new ArrayList<String>();
+	}
 
-	public Af(ArrayList<Estado> estados, ArrayList<String> linguagem) {
+	public Af(Map<String, Estado> estados, String[] linguagem) {
 		this.setEstados(estados);
+		
+		this.linguagem = new ArrayList<String>();
 		this.setLinguagem(linguagem);
 	}
 
-	public ArrayList<Estado> getEstados() {
+	public Map<String, Estado> getEstados() {
 		return estados;
 	}
 
-	private void setEstados(ArrayList<Estado> estados) {
+	public void setEstados(Map<String, Estado> estados) {
 		this.estados = estados;
 	}
 
@@ -23,7 +34,9 @@ public class Af {
 		return linguagem;
 	}
 
-	private void setLinguagem(ArrayList<String> linguagem) {
-		this.linguagem = linguagem;
+	public void setLinguagem(String[] ling) {
+		for (String s : ling) {
+			this.linguagem.add(s);
+		}
 	}
 }
