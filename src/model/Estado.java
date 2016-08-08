@@ -1,28 +1,30 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Estado {
-	private ArrayList<Transicao> transicao;
+	private Map<String, Transicao> transicao;
 	private boolean isFinal;
 	private boolean isInicial;
 	
 	
 	public Estado() {
 		super();
-		this.transicao = new ArrayList<Transicao>();
+		this.transicao = new HashMap<String, Transicao>();
 	}
 
-	public ArrayList<Transicao> getTransicao() {
+	public Map<String, Transicao> getTransicao() {
 		return transicao;
 	}
 
-	public void setTransicao(ArrayList<Transicao> transicao) {
+	public void setTransicao(Map<String, Transicao> transicao) {
 		this.transicao = transicao;
 	}
 	
-	public void addTransicao(Transicao transicao) {
-		this.transicao.add(transicao);
+	public void addTransicao(Transicao transicao, String entrada) {
+		this.transicao.put(entrada, transicao);
 	}
 
 	public boolean isFinal() {

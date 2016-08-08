@@ -84,7 +84,6 @@ public class Arquivo {
 		for(int i = 0; i < transicoes.size(); i++) { 
 			String[] funcaoTransicao = transAux[i][0].split(","); //separa estado e entrada da função de transição do AF
 			Transicao transicaoAux = new Transicao();
-			transicaoAux.setEntrada(funcaoTransicao[1]); //insere a entrada para a transicao
 			
 			String[] caminhos = transAux[i][1].split(","); //separa os caminhos da transicao
 			transicaoAux.setCaminhos(caminhos);//insere os caminhos
@@ -102,7 +101,7 @@ public class Arquivo {
 			}
 			estadoAuxiliar.setFinal(Utils.Exists(estFinal, funcaoTransicao[0])); //verifica se existe é final e seta
 			
-			estadoAuxiliar.addTransicao(transicaoAux); //adiciona transição no estado
+			estadoAuxiliar.addTransicao(transicaoAux, funcaoTransicao[1]); //adiciona transição no estado com a referida entrada
 			
 			estadosAF.put(funcaoTransicao[0], estadoAuxiliar); //adiciona estado na coleção de estados
 		}
