@@ -10,20 +10,20 @@ import model.Transicao;
 
 public class Conversor {
 	private Map<String, Transicao> fechoLambda;
-	
+
 	public Conversor () {
 		fechoLambda = new HashMap<String, Transicao>();
 	}
 	
-	public static Af AfndLambToAfd () {
+	public Af AfndLambToAfd () {
 		return null;
 	}
 	
-	public static Af afndToAfd () {
+	public Af afndToAfd () {
 		return null;
 	}
 	
-	public static Af afndLambToAfnd (Af afndLamb) {
+	public Af afndLambToAfnd (Af afndLamb) {
 		for (Entry<String, Estado> estado : afndLamb.getEstados().entrySet()) {
 			
 		}

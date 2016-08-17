@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.Af;
+import model.AfndLamb;
 import model.Estado;
 import model.Transicao;
 
@@ -20,8 +21,8 @@ public class Arquivo {
 		BufferedReader ler = new BufferedReader(arq);
 		return ler;
 	}
-	public static Af getAf (BufferedReader ler) throws IOException {
-		Af afndLamb;
+	public static AfndLamb getAf (BufferedReader ler) throws IOException {
+		AfndLamb afndLamb;
 		ler.readLine(); //lê o caracter de abertura da especificação do AFND-Lamb "("
 		
 		/*Lê o conjunto de estados no arquivo*/
@@ -46,10 +47,10 @@ public class Arquivo {
 		String estadoInicial = ler.readLine();
 		String estadoFinal = ler.readLine();
 		
-		afndLamb = tratarDados(aux, linguagem, transicoes, estadoInicial, estadoFinal);		
+		afndLamb = tratarDados(aux, linguagem, transicoes, estadoInicial, estadoFinal);
 		return afndLamb;
 	}
-	public static Af tratarDados(String estados, String linguagem, List<String> transicoes, String estadoInicial, String estadoFinal) {	
+	public static AfndLamb tratarDados(String estados, String linguagem, List<String> transicoes, String estadoInicial, String estadoFinal) {	
 		/*Preparar estados*/
 		estados = estados.substring(1, estados.length()-2); //elimina os parênteses
 		String[] estadosAux = estados.split(","); //separa os estados
@@ -106,8 +107,9 @@ public class Arquivo {
 			estadosAF.put(funcaoTransicao[0], estadoAuxiliar); //adiciona estado na coleção de estados
 		}
 		
-		Af afndLamb = new Af(estadosAF, ling);
+		AfndLamb afndLamb = new AfndLamb(estadosAF, ling);
 		Imprimir(afndLamb);
+		afndLamb.setFechoLambda();
 		return afndLamb;
 	}
 	private static void Imprimir(Af afnd) {

@@ -6,11 +6,12 @@ import java.io.IOException;
 
 import controller.Arquivo;
 import model.Af;
+import model.AfndLamb;
 
 public class Converte {
 
 	public static void main(String[] args) {
-		Af afndLamb = null;
+		AfndLamb afndLamb = null;
 		BufferedReader leitor = null;
 		try {
 			leitor = Arquivo.LerArquivo(args[0]);
@@ -24,6 +25,9 @@ public class Converte {
 			System.err.printf("Erro na leitura do arquivo: %s.\n",
 			e.getMessage());
 		}
+		Af afnd = null;
+		//chamar função de conversão do afnd
+		
 	}
 
 }

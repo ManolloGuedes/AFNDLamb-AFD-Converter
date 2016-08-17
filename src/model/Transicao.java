@@ -12,5 +12,13 @@ public class Transicao {
 	public void setCaminhos(String[] caminhos) {
 		this.caminhos = caminhos;
 	}
+	public boolean existe (String str) {
+		for (String s : caminhos) {
+			if (s.equals(str)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
