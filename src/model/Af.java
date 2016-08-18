@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Af {
 	private Map<String, Estado> estados;
@@ -38,5 +39,14 @@ public class Af {
 		for (String s : ling) {
 			this.linguagem.add(s);
 		}
+	}
+	
+	public String getEstadoInicial() {
+		for(Entry<String, Estado> a : estados.entrySet()) {
+			if(a.getValue().isInicial()) {
+				return a.getKey();
+			}
+		}
+		return null;
 	}
 }

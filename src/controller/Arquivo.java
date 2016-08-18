@@ -13,6 +13,7 @@ import model.Af;
 import model.AfndLamb;
 import model.Estado;
 import model.Transicao;
+import view.Converte;
 
 public class Arquivo {
 	
@@ -108,11 +109,11 @@ public class Arquivo {
 		}
 		
 		AfndLamb afndLamb = new AfndLamb(estadosAF, ling);
-		Imprimir(afndLamb);
+		//Imprimir(afndLamb);
 		afndLamb.setFechoLambda();
 		return afndLamb;
 	}
-	private static void Imprimir(Af afnd) {
+	private static void Imprimir(AfndLamb afnd) {
 		System.out.println("Estados");
 		Map<String, Estado> estado = afnd.getEstados();
 
@@ -120,5 +121,7 @@ public class Arquivo {
 		    System.out.println(pair.getKey());
 		    System.out.println(pair.getValue());
 		}
+		Conversor conversor = new Conversor();
+		conversor.afndLambToAfnd(afnd);
 	}
 }

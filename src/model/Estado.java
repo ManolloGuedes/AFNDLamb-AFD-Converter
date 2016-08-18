@@ -42,4 +42,5 @@ public class Estado {
 	public void setInicial(boolean isInicial) {
 		this.isInicial = isInicial;
 	}
+	
 }

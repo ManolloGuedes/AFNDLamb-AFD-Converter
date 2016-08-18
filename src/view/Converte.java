@@ -28,6 +28,9 @@ public class Converte {
 		Af afnd = null;
 		//chamar função de conversão do afnd
 		
+		Af afd = null;
+		//chamar função de conversão do afd
+		
 	}
 
 }

@@ -40,30 +40,35 @@ public class Utils {
         transicao.setCaminhos(semRepeticao);
         return transicao;*/
 		String[] original = transicao.getCaminhos();
-		
-		HashSet<String> hsOriginal = new HashSet<String>();
-        for(String n : original) {
-            hsOriginal.add(n);
-        }
-        int i = 0;
-        String[] semRepeticoes = new String[hsOriginal.size()];
-        for(String nome : hsOriginal) {
-            semRepeticoes[i++] = nome;
-        }
-        transicao.setCaminhos(semRepeticoes);
-        return transicao;
+		if (original != null) {	
+			HashSet<String> hsOriginal = new HashSet<String>();
+	        for(String n : original) {
+	            hsOriginal.add(n);
+	        }
+	        int i = 0;
+	        String[] semRepeticoes = new String[hsOriginal.size()];
+	        for(String nome : hsOriginal) {
+	            semRepeticoes[i++] = nome;
+	        }
+	        transicao.setCaminhos(semRepeticoes);
+	        return transicao;
+		}
+		return null;
 	}
 
 	public static String[] concatenarArray(String[]...arrays ) {
 		int length = 0;
         for (String[] array : arrays) { 
-        	length += array.length; 
+        	if (array != null)
+        		length += array.length; 
         }
         String[] retorno = new String[length];
         int destPos = 0;
         for (String[] array : arrays) {
-            System.arraycopy (array, 0, retorno, destPos, array.length);
-            destPos += array.length;
+        	if (array != null) {
+	            System.arraycopy (array, 0, retorno, destPos, array.length);
+	            destPos += array.length;
+        	}
         }
         return retorno;
 	}
