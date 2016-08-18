@@ -1,13 +1,17 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import model.Af;
 import model.AfndLamb;
@@ -17,7 +21,7 @@ import view.Converte;
 
 public class Arquivo {
 	
-	public static BufferedReader LerArquivo(String nome) throws FileNotFoundException {
+	public static BufferedReader lerArquivo(String nome) throws FileNotFoundException {
 		FileReader arq = new FileReader(nome);
 		BufferedReader ler = new BufferedReader(arq);
 		return ler;
@@ -39,7 +43,7 @@ public class Arquivo {
 		transicoes = new ArrayList<String>();
 		
 		String aux = ler.readLine();
-		while (aux!="},") {
+		while (!aux.equals("},")) {
 			transicoes.add(aux);
 			aux = ler.readLine();
 		}
@@ -48,7 +52,7 @@ public class Arquivo {
 		String estadoInicial = ler.readLine();
 		String estadoFinal = ler.readLine();
 		
-		afndLamb = tratarDados(aux, linguagem, transicoes, estadoInicial, estadoFinal);
+		afndLamb = tratarDados(estados, linguagem, transicoes, estadoInicial, estadoFinal);
 		return afndLamb;
 	}
 	public static AfndLamb tratarDados(String estados, String linguagem, List<String> transicoes, String estadoInicial, String estadoFinal) {	
@@ -113,7 +117,7 @@ public class Arquivo {
 		afndLamb.setFechoLambda();
 		return afndLamb;
 	}
-	private static void Imprimir(AfndLamb afnd) {
+	private static void imprimir(AfndLamb afnd) {
 		System.out.println("Estados");
 		Map<String, Estado> estado = afnd.getEstados();
 
@@ -123,5 +127,75 @@ public class Arquivo {
 		}
 		Conversor conversor = new Conversor();
 		conversor.afndLambToAfnd(afnd);
+	}
+	public static void escreverArquivo(String nomeArq, AfndLamb afndLamb, Af afnd, Af afd) throws IOException {
+		Writer output;
+		output = new BufferedWriter(new FileWriter(nomeArq));
+		escreverAfndLamb(output, afndLamb);
+		output.append("\n\r\n");
+		output.append("\n\r\n");
+		escreverAfnd(output, afndLamb, afnd);
+		output.append("\n\r\n");
+		output.append("\n\r\n");
+		escreverAfd(output, afndLamb, afd);
+		output.close();
+	}
+	private static void escreverAfd(Writer output, AfndLamb afndLamb, Af afd) throws IOException {
+		char nulo = 145;
+		output.append("Função de Transição ND\t\t\ta\t\t\tb\t\t\tc");
+		output.append("\n\r\n");
+		for(Entry<String, Estado> loop : afd.getEstados().entrySet()) {
+			output.append("<"+loop.getKey()+">");
+			for (String entrada : afndLamb.getLinguagem()) {
+				if (loop.getValue().getTransicao().get(entrada) == null) {
+					output.append("\t\t\t\t\t\t " + "-"+" ");
+				}
+				else
+					output.append("\t\t\t\t\t\t<" + Utils.arrayToString(loop.getValue().getTransicao().get(entrada).getCaminhos()) + ">");
+			}
+			output.append("\n\r\n");
+		}
+	}
+	private static void escreverAfndLamb(Writer output, AfndLamb afndLamb) throws IOException {
+		char nulo = 145;
+		output.append("Função de Transição ND-Lambda\t\t\t");
+		for (String entrada : afndLamb.getLinguagem()) {
+			output.append(entrada + "\t\t\t");
+		}
+		output.append("lambda\n\r\n");
+		for(Entry<String, Estado> loop : afndLamb.getEstados().entrySet()) {
+			output.append(loop.getKey());
+			for (String entrada : afndLamb.getLinguagem()) {
+				if (loop.getValue().getTransicao().get(entrada) == null) {
+					output.append("\t\t\t\t\t\t{" + nulo +"}");
+				}
+				else
+					output.append("\t\t\t\t\t\t{" + Utils.arrayToString(loop.getValue().getTransicao().get(entrada).getCaminhos()) + "}");
+			}
+			if (loop.getValue().getTransicao().get(".") == null) {
+				output.append("\t\t\t\t\t\t{" + nulo +"}");
+			}
+			else
+				output.append("\t\t\t\t\t\t{" + Utils.arrayToString(loop.getValue().getTransicao().get(".").getCaminhos()) + "}");
+			output.append("\n\r\n");
+		}
+		
+	}
+	private static void escreverAfnd(Writer output, AfndLamb afndLamb, Af afnd) throws IOException {
+		char nulo = 145;
+		output.append("Função de Transição ND\t\t\ta\t\t\tb\t\t\tc");
+		output.append("\n\r\n");
+		for(Entry<String, Estado> loop : afnd.getEstados().entrySet()) {
+			output.append(loop.getKey());
+			for (String entrada : afndLamb.getLinguagem()) {
+				if (loop.getValue().getTransicao().get(entrada) == null) {
+					output.append("\t\t\t\t\t\t{" + nulo +"}");
+				}
+				else
+					output.append("\t\t\t\t\t\t{" + Utils.arrayToString(loop.getValue().getTransicao().get(entrada).getCaminhos()) + "}");
+			}
+			output.append("\n\r\n");
+		}
+		
 	}
 }
