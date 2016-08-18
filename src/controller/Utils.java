@@ -72,4 +72,13 @@ public class Utils {
         }
         return retorno;
 	}
+	public static String arrayToString(String[] array) {
+		String str = "";
+		for(String s : array) {
+			str+=s;
+			str+=",";
+		}
+		str = str.substring(0, str.length()-1);
+		return str;
+	}
 }

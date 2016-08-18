@@ -34,7 +34,7 @@ public class teste {
 		
 		AfndLamb afndLamb = Arquivo.tratarDados("[q0,q1,q2],", "{a,b,c},", lista, "q0,","{q1}");
 		Conversor conversor = new Conversor();
-		conversor.afndLambToAfnd(afndLamb);
+		conversor.AfndLambToAfd(afndLamb);
 	}
 
 }

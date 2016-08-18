@@ -11,11 +11,53 @@ import model.Transicao;
 
 public class Conversor {
 	
-	public Af AfndLambToAfd () {
-		return null;
+	public Af AfndLambToAfd (AfndLamb afndLamb) {
+		Af afnd = this.afndLambToAfnd(afndLamb);
+		Af afd = this.afndToAfd(afnd);
+		return afd;
 	}
-	public Af afndToAfd (Af afnd) {		
-		return null;
+	public Af afndToAfd (Af afnd) {
+		String inicial = afnd.getEstadoInicial();
+		Map<String, Estado> estados = new HashMap<String, Estado>();
+		
+		estados = this.GerarTabelaAfd(inicial, afnd, estados);
+		//acessar inicial
+		//caminhar pelas transições de acordo com a linguagem
+		//pegar os estados novos que surgiram e jogar denro do Map
+		//caminhar dentro deles
+		Af afd = new Af();
+		afd.setEstados(estados);
+		return afd;
+	}
+	private Map<String, Estado> GerarTabelaAfd(String estadoNome, Af afnd, Map<String, Estado>estadosAfd) {
+		String[] estadosCompoe = estadoNome.split(",");
+		Estado estado = new Estado();
+		//para cada entrada
+		for(String entrada : afnd.getLinguagem()) {
+			String[] caminhos = null;
+			//pego os caminhos de cada estado que compõe o estado do AFD
+			for(String estadoAtual : estadosCompoe) {
+				if (afnd.getEstados().get(estadoAtual).getTransicao().get(entrada) != null) {
+					caminhos = Utils.concatenarArray(caminhos, afnd.getEstados().get(estadoAtual).getTransicao().get(entrada).getCaminhos());
+					Transicao aux = new Transicao();
+					aux.setCaminhos(caminhos);
+					aux = Utils.RemoverRepeticoes(aux);
+					String estadoNome2 = Utils.arrayToString(aux.getCaminhos());
+					if(!estadosAfd.containsKey(estadoNome2)) {
+						estadosAfd.put(estadoNome2, null);
+						GerarTabelaAfd(estadoNome2, afnd, estadosAfd);
+					}
+					caminhos = aux.getCaminhos();
+				}
+			}
+			//Crio uma transicao
+			Transicao transicao = new Transicao();
+			transicao.setCaminhos(caminhos);
+			transicao = Utils.RemoverRepeticoes(transicao);
+			estado.addTransicao(transicao, entrada);
+			estadosAfd.put(estadoNome, estado);
+		}
+		return estadosAfd;
 	}
 	public Af afndLambToAfnd (AfndLamb afndLamb) {
 		//procurar um estado
