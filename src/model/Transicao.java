@@ -14,7 +14,7 @@ public class Transicao {
 	}
 	public boolean existe (String str) {
 		for (String s : caminhos) {
-			if (s.equals(str)) {
+			if (s != null && s.equals(str)) {
 				return true;
 			}
 		}

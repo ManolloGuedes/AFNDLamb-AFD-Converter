@@ -43,7 +43,7 @@ public class Af {
 	
 	public String getEstadoInicial() {
 		for(Entry<String, Estado> a : estados.entrySet()) {
-			if(a.getValue().isInicial()) {
+			if(a.getValue() != null && a.getValue().isInicial()) {
 				return a.getKey();
 			}
 		}

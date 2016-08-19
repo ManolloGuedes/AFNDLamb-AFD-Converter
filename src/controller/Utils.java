@@ -16,29 +16,6 @@ public class Utils {
 	}
 
 	public static Transicao RemoverRepeticoes(Transicao transicao) {
-		/*String[] original = transicao.getCaminhos();
-		
-        String[] semRepeticao = new String[original.length];
-        int qtd = 0;
-        //fixa o vetor original e compara com o vetor sem repetição
-        for(int i = 0 ; i < original.length ; i++) {
-            boolean existe = false;
-            //primeira vez não entra no for, a partir da segunda percorre o vetor sem repetição pra saber se já foi
-            //registrado o elemento em questão dentro dele
-            for(int j = 0 ; j < qtd ; j++) {
-                if(semRepeticao[j] == original[i]) {
-                    existe = true;
-                    break;
-                }
-            }
-            if(!existe) {
-                semRepeticao[qtd++] = original[i];
-            }
-        }
-        // arrumando tamanho do vetor
-        semRepeticao = Arrays.copyOf(semRepeticao, qtd);
-        transicao.setCaminhos(semRepeticao);
-        return transicao;*/
 		String[] original = transicao.getCaminhos();
 		if (original != null) {	
 			HashSet<String> hsOriginal = new HashSet<String>();

@@ -18,7 +18,7 @@ public class Converte {
 		Conversor conversor = new Conversor();
 		BufferedReader leitor = null;
 		try {
-			leitor = Arquivo.lerArquivo("C:/Users/Manollo Guedes/workspaceLFA/TP-LFA/desc_af1.txt");
+			leitor = Arquivo.lerArquivo(args[0]);
 		} catch (FileNotFoundException e) {
 			System.err.printf("Erro na abertura do arquivo: %s.\n", 
 			e.getMessage());
@@ -27,7 +27,7 @@ public class Converte {
 			afndLamb = Arquivo.getAf(leitor);
 			afnd = conversor.afndLambToAfnd(afndLamb);
 			afd = conversor.afndToAfd(afnd);
-			Arquivo.escreverArquivo("C:/Users/Manollo Guedes/workspaceLFA/TP-LFA/saida.txt", afndLamb, afnd, afd);
+			Arquivo.escreverArquivo(args[1], afndLamb, afnd, afd);
 		} catch (IOException e) {
 			System.err.printf("Erro na leitura do arquivo: %s.\n",
 			e.getMessage());

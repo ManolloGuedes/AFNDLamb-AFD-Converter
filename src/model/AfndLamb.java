@@ -27,43 +27,44 @@ public class AfndLamb extends Af {
 		}
 	}
 	private void calcularFecho(String key) {
-		
-		/*percorre caminho recursivamente criando fecho lambda*/
-		Transicao lamb = this.getEstados().get(key).getTransicao().get(".");
-		if (lamb != null) {
-			String[] transLamb = lamb.getCaminhos();
-			Transicao fechoAtual = null ;
-			for (int i = 0; i < transLamb.length; i++) {
-				fechoAtual = fechoLambda.get(key);
-				String[] aux;
-				if (fechoAtual != null) {
-					aux = new String[fechoAtual.getCaminhos().length + 1];
-				}
-				else {
-					aux = new String[1];
-					fechoAtual = new Transicao();
-				}
-				if (fechoLambda.get(key) != null) {
-					if (fechoLambda.get(key).existe(transLamb[i])) {
-						break;
+		if (this.getEstados().get(key) != null) {
+			/*percorre caminho recursivamente criando fecho lambda*/
+			Transicao lamb = this.getEstados().get(key).getTransicao().get(".");
+			if (lamb != null) {
+				String[] transLamb = lamb.getCaminhos();
+				Transicao fechoAtual = null ;
+				for (int i = 0; i < transLamb.length; i++) {
+					fechoAtual = fechoLambda.get(key);
+					String[] aux;
+					if (fechoAtual != null) {
+						aux = new String[fechoAtual.getCaminhos().length + 1];
+					}
+					else {
+						aux = new String[1];
+						fechoAtual = new Transicao();
+					}
+					if (fechoLambda.get(key) != null) {
+						if (fechoLambda.get(key).existe(transLamb[i])) {
+							break;
+						}
+					}
+					aux[aux.length-1] = transLamb[i];
+					fechoAtual.setCaminhos(aux);
+					fechoLambda.put(key, fechoAtual);
+					calcularFecho(transLamb[i]);
+					if (this.getFechoLambda().get(transLamb[i]) != null) {
+						String[] aux2 = Utils.concatenarArray(fechoAtual.getCaminhos(), this.getFechoLambda().get(transLamb[i]).getCaminhos());
+						fechoAtual.setCaminhos(aux2);
+						fechoLambda.put(key, fechoAtual);
 					}
 				}
-				aux[aux.length-1] = transLamb[i];
-				fechoAtual.setCaminhos(aux);
+				String[] str = new String[1];
+				str[0] = key;
+				transLamb = Utils.concatenarArray(fechoLambda.get(key).getCaminhos(), str);
+				fechoAtual.setCaminhos(transLamb);
 				fechoLambda.put(key, fechoAtual);
-				calcularFecho(transLamb[i]);
-				if (this.getFechoLambda().get(transLamb[i]) != null) {
-					String[] aux2 = Utils.concatenarArray(fechoAtual.getCaminhos(), this.getFechoLambda().get(transLamb[i]).getCaminhos());
-					fechoAtual.setCaminhos(aux2);
-					fechoLambda.put(key, fechoAtual);
-				}
+				fechoLambda.put(key, Utils.RemoverRepeticoes(fechoLambda.get(key)));
 			}
-			String[] str = new String[1];
-			str[0] = key;
-			transLamb = Utils.concatenarArray(fechoLambda.get(key).getCaminhos(), str);
-			fechoAtual.setCaminhos(transLamb);
-			fechoLambda.put(key, fechoAtual);
-			fechoLambda.put(key, Utils.RemoverRepeticoes(fechoLambda.get(key)));
 		}
 	}
 }

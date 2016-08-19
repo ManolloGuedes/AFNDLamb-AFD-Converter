@@ -91,9 +91,13 @@ public class Conversor {
 		}
 		if (fecho.get(a.getKey()) != null) {
 			for(String lambda : fecho.get(a.getKey()).getCaminhos()) {
-				Transicao caminhosAntigos = afndLamb.getEstados().get(lambda).getTransicao().get(leitura);
-				if (caminhosAntigos != null) {
-					conjuntoTransicoes = Utils.concatenarArray(conjuntoTransicoes, caminhosAntigos.getCaminhos());
+				if (lambda != null) {
+					Transicao caminhosAntigos = null;
+					if (afndLamb.getEstados().get(lambda) != null) 
+						caminhosAntigos = afndLamb.getEstados().get(lambda).getTransicao().get(leitura);
+					if (caminhosAntigos != null) {
+						conjuntoTransicoes = Utils.concatenarArray(conjuntoTransicoes, caminhosAntigos.getCaminhos());
+					}
 				}
 			}
 		}
